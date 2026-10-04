@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon Musée Idéal — Gardez la trace des œuvres qui vous ont marqué</title>
+<meta name="description" content="Application Android gratuite pour photographier les œuvres d'art que vous aimez en exposition, noter vos impressions et tout retrouver. Sans compte, sans publicité.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8C3225">
+<link rel="icon" href="assets/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icone-180.png">
+<link rel="alternate" hreflang="fr" href="https://artoryapp-afk.github.io/">
+<link rel="alternate" hreflang="en" href="https://artoryapp-afk.github.io/en/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mon Musée Idéal">
+<meta property="og:description" content="Gardez la trace des œuvres qui vous ont marqué.">
+<meta property="og:url" content="https://artoryapp-afk.github.io/">
+<meta property="og:image" content="https://artoryapp-afk.github.io/assets/partage-fr.png">
+<style>
+@font-face { font-family: 'Fraunces'; src: url('assets/fraunces.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('assets/inter.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+:root {
+  --paper: #EAE3D2; --card: #F2ECDF; --ink: #241F17; --muted: #746A5A;
+  --accent: #8C3225; --on-accent: #F6F0E3; --line: #C9BA9C; --frame: #1E1A17;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1A1611; --card: #262019; --ink: #ECE3D2; --muted: #B0A48D;
+    --accent: #D9765E; --on-accent: #1A1611; --line: #3B3326; --frame: #0E0C09;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.6 'Inter', system-ui, sans-serif; }
+img { max-width: 100%; display: block; }
+a { color: var(--accent); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; line-height: 1.2; margin: 0; }
+
+/* En-tête */
+.entete { display: flex; align-items: center; justify-content: space-between; padding-block: 22px; }
+.marque { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink);
+  font-family: 'Fraunces', Georgia, serif; font-size: 1.25rem; font-weight: 500; }
+.marque svg { width: 40px; height: 40px; flex-shrink: 0; }
+.langue { font-size: .95rem; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+
+/* Accueil */
+.accueil { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 40px 72px; }
+.accueil h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); }
+.accroche { font-family: 'Fraunces', Georgia, serif; color: var(--accent); font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin: 14px 0 22px; line-height: 1.3; }
+.intro { color: var(--muted); max-width: 34em; margin: 0 0 30px; }
+.bouton { display: inline-block; background: var(--accent); color: var(--on-accent); border-radius: 999px;
+  padding: 14px 28px; font-weight: 600; text-decoration: none; }
+.bouton[aria-disabled="true"] { cursor: default; }
+.note { color: var(--muted); font-size: .9rem; margin-top: 12px; }
+
+/* Téléphone */
+.telephone { background: var(--frame); border-radius: 36px; padding: 10px; max-width: 300px; margin: 0 auto;
+  box-shadow: 0 24px 48px rgba(36, 31, 23, .22); }
+.telephone img { border-radius: 27px; width: 100%; height: auto; }
+
+/* Fonctions */
+section { padding: 64px 0; border-top: 1px solid var(--line); }
+section > .wrap > h2 { font-size: clamp(1.8rem, 3.6vw, 2.4rem); margin-bottom: 40px; text-align: center; }
+.fonction { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin: 0 0 72px; }
+.fonction:last-child { margin-bottom: 0; }
+.fonction:nth-child(even) .texte { order: 2; }
+.fonction h3 { font-size: 1.6rem; margin-bottom: 14px; }
+.fonction p { color: var(--muted); margin: 0; }
+.fonction .telephone { max-width: 260px; }
+
+/* Galerie */
+.galerie { display: flex; gap: 22px; overflow-x: auto; padding: 8px 4px 24px; scroll-snap-type: x mandatory; }
+.galerie figure { margin: 0; flex: 0 0 220px; scroll-snap-align: center; }
+.galerie .telephone { max-width: none; border-radius: 28px; padding: 8px; box-shadow: 0 12px 28px rgba(36, 31, 23, .18); }
+.galerie .telephone img { border-radius: 21px; }
+.galerie figcaption { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 12px; }
+
+/* Vie privée */
+.vie-privee ul { list-style: none; padding: 0; margin: 0 auto 28px; max-width: 640px; display: grid; gap: 14px; }
+.vie-privee li { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px 16px 52px; position: relative; }
+.vie-privee li::before { content: ""; position: absolute; left: 20px; top: 22px; width: 14px; height: 8px;
+  border-left: 2.5px solid var(--accent); border-bottom: 2.5px solid var(--accent); transform: rotate(-45deg); }
+.centre { text-align: center; }
+
+/* Pied */
+.contact p { margin: 0; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+/* Téléphones */
+@media (max-width: 760px) {
+  .accueil, .fonction { grid-template-columns: 1fr; gap: 32px; }
+  .accueil { padding-block: 16px 56px; text-align: center; }
+  .intro { margin-left: auto; margin-right: auto; }
+  .fonction { margin-bottom: 56px; }
+  .fonction:nth-child(even) .texte { order: 0; }
+  .fonction .telephone, .accueil .telephone { max-width: 240px; }
+  section { padding: 48px 0; }
+}
+</style>
+</head>
+<body>
+  <header class="wrap entete">
+    <a class="marque" href="./"><svg viewBox="0 0 100 100" role="img" aria-label="Logo de Mon Musée Idéal"><rect width="100" height="100" rx="22" fill="#8C3225"/><path transform="translate(14 14) scale(.72)" fill="#EAE3D2" fill-rule="evenodd" d="m94 2h-88c-2.2109 0-4 1.7891-4 4v88c0 2.2109 1.7891 4 4 4h88c2.2109 0 4-1.7891 4-4v-88c0-2.2109-1.7891-4-4-4zm-84 13.656 12 12v44.688l-12 12zm5.6562 74.344 12-12h44.688l12 12zm14.344-20v-40h40v40zm42.344-48h-44.688l-12-12h68.688z"/></svg><span>Mon Musée Idéal</span></a>
+    <a class="langue" href="en/" hreflang="en" lang="en">English</a>
+  </header>
+
+  <main>
+    <div class="wrap accueil">
+      <div>
+        <h1>Mon Musée Idéal</h1>
+        <p class="accroche">Gardez la trace des œuvres qui vous ont marqué.</p>
+        <p class="intro">Une œuvre vous a marqué dans une exposition ? Photographiez-la, notez ce qu'elle vous inspire, et retrouvez-la quand vous voulez. Mon Musée Idéal est votre carnet de visite personnel, simple et sans compte à créer.</p>
+        <a class="bouton" aria-disabled="true">Bientôt sur Google Play</a>
+        <p class="note">Application Android gratuite · français et anglais</p>
+      </div>
+      <div class="telephone"><picture><source srcset="assets/fr-sombre-01-liste-expositions.jpg" media="(prefers-color-scheme: dark)"><img src="assets/fr-clair-01-liste-expositions.jpg" alt="La collection Mon Musée Idéal sur un téléphone" width="540" height="960" loading="eager" decoding="async"></picture></div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <h2>Tout ce qu’il faut, rien de plus</h2>
+      <div class="fonction">
+        <div class="texte"><h3>Ajoutez une œuvre en quelques secondes</h3><p>Prenez l'œuvre en photo ou importez-la de votre galerie. Scannez le cartel : l'application lit le texte et vous propose l'artiste et le titre, directement sur votre téléphone. L'exposition, le lieu, la date et vos compagnons de visite sont repris d'une œuvre à l'autre.</p></div>
+        <div class="telephone"><picture><source srcset="assets/fr-sombre-04-modifier-oeuvre.jpg" media="(prefers-color-scheme: dark)"><img src="assets/fr-clair-04-modifier-oeuvre.jpg" alt="Formulaire d'ajout d'une œuvre, avec photo et scan du cartel" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Gardez ce qui compte pour vous</h3><p>Vos impressions, le texte du cartel, vos propres tags comme « Coup de cœur ». Plusieurs photos par œuvre, et votre musée préféré proposé par défaut.</p></div>
+        <div class="telephone"><picture><source srcset="assets/fr-sombre-03-fiche-tags-impressions.jpg" media="(prefers-color-scheme: dark)"><img src="assets/fr-clair-03-fiche-tags-impressions.jpg" alt="Fiche d'une œuvre avec tags et impressions" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Retrouvez tout facilement</h3><p>Votre collection classée par exposition, par date, par lieu ou par artiste, et une recherche dans tous vos textes : titre, artiste, exposition, lieu, impressions, cartel.</p></div>
+        <div class="telephone"><picture><source srcset="assets/fr-sombre-05-recherche.jpg" media="(prefers-color-scheme: dark)"><img src="assets/fr-clair-05-recherche.jpg" alt="Recherche dans la collection" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Vos données restent à vous</h3><p>Tout est enregistré sur votre téléphone. Aucun compte, aucune publicité. Si vous le souhaitez, une sauvegarde dans votre propre Google Drive, avec restauration sur un nouveau téléphone.</p></div>
+        <div class="telephone"><picture><source srcset="assets/fr-sombre-08-reglages-sauvegarde.jpg" media="(prefers-color-scheme: dark)"><img src="assets/fr-clair-08-reglages-sauvegarde.jpg" alt="Réglages de la sauvegarde Google Drive" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>En images</h2>
+        <div class="galerie">
+        <figure><div class="telephone"><picture><img src="assets/fr-clair-01-liste-expositions.jpg" alt="La collection, classée par exposition" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>La collection, classée par exposition</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="assets/fr-clair-02-fiche-oeuvre.jpg" alt="La fiche d'une œuvre" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>La fiche d'une œuvre</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="assets/fr-clair-06-liste-artistes.jpg" alt="La collection, classée par artiste" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>La collection, classée par artiste</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="assets/fr-sombre-01-liste-expositions.jpg" alt="Le mode sombre" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Le mode sombre</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="assets/fr-sombre-02-fiche-oeuvre.jpg" alt="La fiche d'une œuvre, en mode sombre" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>La fiche d'une œuvre, en mode sombre</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="vie-privee">
+      <div class="wrap">
+        <h2>Votre vie privée, d’abord</h2>
+        <ul>
+        <li>Pas de compte à créer : nous ne savons pas qui vous êtes.</li>
+        <li>Vos photos et vos notes restent sur votre téléphone, jamais sur nos serveurs.</li>
+        <li>Aucune publicité, aucune revente de données.</li>
+        <li>La lecture du cartel se fait sur votre téléphone.</li>
+        </ul>
+        <p class="centre"><a href="https://artoryapp-afk.github.io/monmuseeideal/">Lire la politique de confidentialité</a></p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="wrap centre">
+        <h2>Une question, une idée ?</h2>
+        <p>Écrivez-nous : <a href="mailto:artory.app@gmail.com">artory.app@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Artory · Mon Musée Idéal</span>
+      <a href="https://artoryapp-afk.github.io/monmuseeideal/">Confidentialité et conditions</a>
+    </div>
+  </footer>
+</body>
+</html>
