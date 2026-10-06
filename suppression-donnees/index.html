@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supprimer vos données — Mon Musée Idéal</title>
+<meta name="description" content="Comment supprimer vos données de Mon Musée Idéal. How to delete your My Perfect Museum data.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../assets/icone.svg" type="image/svg+xml">
+<style>
+/* Instrument Sans (SIL Open Font License 1.1, voir assets/OFL.txt), fichiers web officiels. */
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+:root {
+  --mmi-paper: #F5F6F7; --mmi-card: #E7E9EC; --mmi-ink: #121418; --mmi-muted: #6A6F78;
+  --mmi-accent: #1F4D3F; --mmi-on-accent: #F5F6F7; --mmi-line: #DCDFE3; --mmi-frame: #121418;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mmi-paper: #1E2823; --mmi-card: #26322C; --mmi-ink: #E7EDE4; --mmi-muted: #9FB0A4;
+    --mmi-accent: #EDE7B9; --mmi-on-accent: #1E2823; --mmi-line: #3A4A42; --mmi-frame: #0B0F0D;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--mmi-paper); color: var(--mmi-ink); font: 17px/1.6 'Instrument Sans', system-ui, sans-serif; }
+img { max-width: 100%; display: block; }
+a { color: var(--mmi-accent); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: 'Instrument Sans', system-ui, sans-serif; font-weight: 500; line-height: 1.2; margin: 0; }
+
+/* En-tête */
+.entete { display: flex; align-items: center; justify-content: space-between; padding-block: 22px; }
+.marque { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--mmi-ink);
+  font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1.25rem; font-weight: 500; }
+.marque svg { width: 40px; height: 40px; flex-shrink: 0; }
+.langue { font-size: .95rem; text-decoration: none; border: 1px solid var(--mmi-line); border-radius: 999px; padding: 6px 14px; }
+
+/* Accueil */
+.accueil { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 40px 72px; }
+.accueil h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); }
+.accroche { font-family: 'Instrument Sans', system-ui, sans-serif; color: var(--mmi-accent); font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin: 14px 0 22px; line-height: 1.3; }
+.intro { color: var(--mmi-muted); max-width: 34em; margin: 0 0 30px; }
+.bouton { display: inline-block; background: var(--mmi-accent); color: var(--mmi-on-accent); border-radius: 999px;
+  padding: 14px 28px; font-weight: 600; text-decoration: none; }
+.bouton[aria-disabled="true"] { cursor: default; }
+.note { color: var(--mmi-muted); font-size: .9rem; margin-top: 12px; }
+
+/* Téléphone */
+.telephone { background: var(--mmi-frame); border-radius: 36px; padding: 10px; max-width: 300px; margin: 0 auto;
+  box-shadow: 0 24px 48px rgba(18, 20, 24, .22); }
+.telephone img { border-radius: 27px; width: 100%; height: auto; }
+
+/* Fonctions */
+section { padding: 64px 0; border-top: 1px solid var(--mmi-line); }
+section > .wrap > h2 { font-size: clamp(1.8rem, 3.6vw, 2.4rem); margin-bottom: 40px; text-align: center; }
+.fonction { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin: 0 0 72px; }
+.fonction:last-child { margin-bottom: 0; }
+.fonction:nth-child(even) .texte { order: 2; }
+.fonction h3 { font-size: 1.6rem; margin-bottom: 14px; }
+.fonction p { color: var(--mmi-muted); margin: 0; }
+.fonction .telephone { max-width: 260px; }
+
+/* Galerie */
+.galerie { display: flex; gap: 22px; overflow-x: auto; padding: 8px 4px 24px; scroll-snap-type: x mandatory; }
+.galerie figure { margin: 0; flex: 0 0 220px; scroll-snap-align: center; }
+.galerie .telephone { max-width: none; border-radius: 28px; padding: 8px; box-shadow: 0 12px 28px rgba(18, 20, 24, .18); }
+.galerie .telephone img { border-radius: 21px; }
+.galerie figcaption { text-align: center; color: var(--mmi-muted); font-size: .9rem; margin-top: 12px; }
+
+/* Vie privée */
+.vie-privee ul { list-style: none; padding: 0; margin: 0 auto 28px; max-width: 640px; display: grid; gap: 14px; }
+.vie-privee li { background: var(--mmi-card); border: 1px solid var(--mmi-line); border-radius: 14px; padding: 16px 20px 16px 52px; position: relative; }
+.vie-privee li::before { content: ""; position: absolute; left: 20px; top: 22px; width: 14px; height: 8px;
+  border-left: 2.5px solid var(--mmi-accent); border-bottom: 2.5px solid var(--mmi-accent); transform: rotate(-45deg); }
+.centre { text-align: center; }
+
+/* Pied */
+.contact p { margin: 0; }
+footer { border-top: 1px solid var(--mmi-line); padding: 28px 0 40px; color: var(--mmi-muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+/* Téléphones */
+@media (max-width: 760px) {
+  .accueil, .fonction { grid-template-columns: 1fr; gap: 32px; }
+  .accueil { padding-block: 16px 56px; text-align: center; }
+  .intro { margin-left: auto; margin-right: auto; }
+  .fonction { margin-bottom: 56px; }
+  .fonction:nth-child(even) .texte { order: 0; }
+  .fonction .telephone, .accueil .telephone { max-width: 240px; }
+  section { padding: 48px 0; }
+}
+
+.texte-page { max-width: 760px; padding-top: 8px; padding-bottom: 8px; }
+.texte-page h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); margin-bottom: 18px; }
+section > .wrap.texte-page > h2 { font-size: 1.3rem; margin: 26px 0 10px; text-align: left; }
+.texte-page li { margin-bottom: 10px; }
+.texte-page p { color: var(--mmi-ink); }
+</style>
+</head>
+<body>
+  <header class="wrap entete">
+    <a class="marque" href="../"><svg viewBox="0 0 100 100" role="img" aria-label="Mon Musée Idéal"><rect x="2" y="2" width="96" height="96" rx="22" fill="#F5F6F7" stroke="#DCDFE3" stroke-width="2"/><path transform="translate(20 20) scale(.6)" fill="#121418" fill-rule="evenodd" d="m94 2h-88c-2.2109 0-4 1.7891-4 4v88c0 2.2109 1.7891 4 4 4h88c2.2109 0 4-1.7891 4-4v-88c0-2.2109-1.7891-4-4-4zm-84 13.656 12 12v44.688l-12 12zm5.6562 74.344 12-12h44.688l12 12zm14.344-20v-40h40v40zm42.344-48h-44.688l-12-12h68.688z"/></svg><span>Mon Musée Idéal</span></a>
+    <a class="langue" href="#en" hreflang="en" lang="en">English</a>
+  </header>
+  <main>
+    <section lang="fr" id="fr">
+      <div class="wrap texte-page">
+        <h1>Supprimer vos données — Mon Musée Idéal</h1>
+        <p>Mon Musée Idéal (éditeur : Artory) n'a ni compte utilisateur ni serveur : nous ne détenons aucune de vos données. Elles se trouvent sur votre téléphone et, si vous avez activé la sauvegarde, dans votre propre Google Drive. Vous pouvez donc les supprimer vous-même, à tout moment, ainsi :</p>
+        <ol>
+        <li><strong>Une œuvre</strong> : dans l'appli, ouvrez l'œuvre, touchez « Modifier » puis « Supprimer l'œuvre ». La suppression est immédiate ; vous disposez de quelques secondes pour l'annuler, puis ses photos sont effacées du téléphone.</li>
+        <li><strong>Un tag ou un compagnon de visite</strong> : Réglages > « Gérer mes tags » ou « Gérer mes compagnons de visite », puis la croix à droite de l'élément.</li>
+        <li><strong>Toutes les données du téléphone</strong> : désinstallez l'appli, ou Paramètres du téléphone > Applications > Mon Musée Idéal > Stockage > « Effacer les données ». Tout est supprimé immédiatement : œuvres, photos, réglages.</li>
+        <li><strong>La sauvegarde Google Drive (si activée)</strong> : dans l'appli, Réglages > « Se déconnecter » (les sauvegardes s'arrêtent et l'accès à votre Drive est retiré), puis supprimez le dossier « Mon Musée Idéal — Sauvegardes » dans votre Google Drive.</li>
+        <li><strong>La sauvegarde automatique d'Android</strong> : elle dépend de votre téléphone et de votre compte Google : Paramètres du téléphone > Google > Sauvegarde, ou drive.google.com > Stockage > Sauvegardes.</li>
+        </ol>
+        <h2>Ce qui est conservé</h2>
+        <ul>
+        <li>Rien chez nous : nous ne recevons ni ne conservons aucune donnée vous concernant.</li>
+        <li>Votre position, envoyée ponctuellement à OpenStreetMap pour trouver le musée le plus proche, n'est pas conservée.</li>
+        <li>Les statistiques techniques de Google ML Kit (lecture du cartel) relèvent de la politique de confidentialité de Google.</li>
+        </ul>
+        <p>Une question ? Écrivez à <a href="mailto:artory.app@gmail.com">artory.app@gmail.com</a> · <a href="https://artoryapp-afk.github.io/monmuseeideal/">Politique de confidentialité</a></p>
+      </div>
+    </section>
+    <section lang="en" id="en">
+      <div class="wrap texte-page">
+        <h1>Delete your data — My Perfect Museum</h1>
+        <p>My Perfect Museum (publisher: Artory) has no user accounts and no server: we hold none of your data. It is stored on your phone and, if you turned on backup, in your own Google Drive. You can delete it yourself at any time:</p>
+        <ol>
+        <li><strong>An artwork</strong>: in the app, open the artwork, tap “Edit” then “Delete artwork”. It is deleted immediately; you have a few seconds to undo, then its photos are erased from the phone.</li>
+        <li><strong>A tag or a visit companion</strong>: Settings > “Manage my tags” or “Manage my visit companions”, then the cross next to the item.</li>
+        <li><strong>All data on the phone</strong>: uninstall the app, or phone Settings > Apps > My Perfect Museum > Storage > “Clear storage”. Everything is deleted immediately: artworks, photos, settings.</li>
+        <li><strong>The Google Drive backup (if turned on)</strong>: in the app, Settings > “Sign out” (backups stop and access to your Drive is revoked), then delete the folder “Mon Musée Idéal — Sauvegardes” in your Google Drive.</li>
+        <li><strong>Android automatic backup</strong>: managed by your phone and Google account: phone Settings > Google > Backup, or drive.google.com > Storage > Backups.</li>
+        </ol>
+        <h2>What is kept</h2>
+        <ul>
+        <li>Nothing on our side: we do not receive or keep any data about you.</li>
+        <li>Your location, sent occasionally to OpenStreetMap to find the nearest museum, is not kept.</li>
+        <li>Technical statistics from Google ML Kit (label reading) fall under Google's privacy policy.</li>
+        </ul>
+        <p>Questions? Write to <a href="mailto:artory.app@gmail.com">artory.app@gmail.com</a> · <a href="https://artoryapp-afk.github.io/monmuseeideal/">Privacy policy (in French)</a></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap"><span>© 2026 Artory · Mon Musée Idéal</span><a href="https://artoryapp-afk.github.io/monmuseeideal/">Politique de confidentialité</a></div>
+  </footer>
+</body>
+</html>
