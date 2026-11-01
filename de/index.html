@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mein Wunschmuseum – Halte die Werke fest, die dich berührt haben</title>
+<meta name="description" content="Kostenlose Android-App, um die Kunstwerke zu fotografieren, die dich in Ausstellungen begeistern, deine Eindrücke zu notieren und alles wiederzufinden. Ohne Konto, ohne Werbung.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1F4D3F">
+<link rel="icon" href="../assets/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icone-180.png">
+<link rel="alternate" hreflang="fr" href="https://artoryapp-afk.github.io/">
+<link rel="alternate" hreflang="en" href="https://artoryapp-afk.github.io/en/">
+<link rel="alternate" hreflang="de" href="https://artoryapp-afk.github.io/de/">
+<link rel="alternate" hreflang="es" href="https://artoryapp-afk.github.io/es/">
+<link rel="alternate" hreflang="it" href="https://artoryapp-afk.github.io/it/">
+<link rel="alternate" hreflang="nl" href="https://artoryapp-afk.github.io/nl/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mein Wunschmuseum">
+<meta property="og:description" content="Halte die Werke fest, die dich berührt haben.">
+<meta property="og:url" content="https://artoryapp-afk.github.io/de/">
+<meta property="og:image" content="https://artoryapp-afk.github.io/assets/partage-de.png">
+<style>
+/* Instrument Sans (SIL Open Font License 1.1, voir assets/OFL.txt), fichiers web officiels. */
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+:root {
+  --mmi-paper: #F5F6F7; --mmi-card: #E7E9EC; --mmi-ink: #121418; --mmi-muted: #6A6F78;
+  --mmi-accent: #1F4D3F; --mmi-on-accent: #F5F6F7; --mmi-line: #DCDFE3; --mmi-frame: #121418;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mmi-paper: #1E2823; --mmi-card: #26322C; --mmi-ink: #E7EDE4; --mmi-muted: #9FB0A4;
+    --mmi-accent: #EDE7B9; --mmi-on-accent: #1E2823; --mmi-line: #3A4A42; --mmi-frame: #0B0F0D;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--mmi-paper); color: var(--mmi-ink); font: 17px/1.6 'Instrument Sans', system-ui, sans-serif; }
+img { max-width: 100%; display: block; }
+a { color: var(--mmi-accent); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: 'Instrument Sans', system-ui, sans-serif; font-weight: 500; line-height: 1.2; margin: 0; }
+
+/* En-tête */
+.entete { display: flex; align-items: center; justify-content: space-between; padding-block: 22px; }
+.marque { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--mmi-ink);
+  font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1.25rem; font-weight: 500; }
+.marque svg { width: 40px; height: 40px; flex-shrink: 0; }
+.langues { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.langue { font-size: .85rem; text-decoration: none; border: 1px solid var(--mmi-line); border-radius: 999px; padding: 4px 10px; }
+
+/* Accueil */
+.accueil { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 40px 72px; }
+.accueil h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); }
+.accroche { font-family: 'Instrument Sans', system-ui, sans-serif; color: var(--mmi-accent); font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin: 14px 0 22px; line-height: 1.3; }
+.intro { color: var(--mmi-muted); max-width: 34em; margin: 0 0 30px; }
+.bouton { display: inline-block; background: var(--mmi-accent); color: var(--mmi-on-accent); border-radius: 999px;
+  padding: 14px 28px; font-weight: 600; text-decoration: none; }
+.bouton[aria-disabled="true"] { cursor: default; }
+.note { color: var(--mmi-muted); font-size: .9rem; margin-top: 12px; }
+
+/* Téléphone */
+.telephone { background: var(--mmi-frame); border-radius: 36px; padding: 10px; max-width: 300px; margin: 0 auto;
+  box-shadow: 0 24px 48px rgba(18, 20, 24, .22); }
+.telephone img { border-radius: 27px; width: 100%; height: auto; }
+
+/* Fonctions */
+section { padding: 64px 0; border-top: 1px solid var(--mmi-line); }
+section > .wrap > h2 { font-size: clamp(1.8rem, 3.6vw, 2.4rem); margin-bottom: 40px; text-align: center; }
+.fonction { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin: 0 0 72px; }
+.fonction:last-child { margin-bottom: 0; }
+.fonction:nth-child(even) .texte { order: 2; }
+.fonction h3 { font-size: 1.6rem; margin-bottom: 14px; }
+.fonction p { color: var(--mmi-muted); margin: 0; }
+.fonction .telephone { max-width: 260px; }
+
+/* Galerie */
+.galerie { display: flex; gap: 22px; overflow-x: auto; padding: 8px 4px 24px; scroll-snap-type: x mandatory; }
+.galerie figure { margin: 0; flex: 0 0 220px; scroll-snap-align: center; }
+.galerie .telephone { max-width: none; border-radius: 28px; padding: 8px; box-shadow: 0 12px 28px rgba(18, 20, 24, .18); }
+.galerie .telephone img { border-radius: 21px; }
+.galerie figcaption { text-align: center; color: var(--mmi-muted); font-size: .9rem; margin-top: 12px; }
+
+/* Vie privée */
+.vie-privee ul { list-style: none; padding: 0; margin: 0 auto 28px; max-width: 640px; display: grid; gap: 14px; }
+.vie-privee li { background: var(--mmi-card); border: 1px solid var(--mmi-line); border-radius: 14px; padding: 16px 20px 16px 52px; position: relative; }
+.vie-privee li::before { content: ""; position: absolute; left: 20px; top: 22px; width: 14px; height: 8px;
+  border-left: 2.5px solid var(--mmi-accent); border-bottom: 2.5px solid var(--mmi-accent); transform: rotate(-45deg); }
+.centre { text-align: center; }
+
+/* Pied */
+.contact p { margin: 0; }
+footer { border-top: 1px solid var(--mmi-line); padding: 28px 0 40px; color: var(--mmi-muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+/* Téléphones */
+@media (max-width: 760px) {
+  .accueil, .fonction { grid-template-columns: 1fr; gap: 32px; }
+  .accueil { padding-block: 16px 56px; text-align: center; }
+  .intro { margin-left: auto; margin-right: auto; }
+  .fonction { margin-bottom: 56px; }
+  .fonction:nth-child(even) .texte { order: 0; }
+  .fonction .telephone, .accueil .telephone { max-width: 240px; }
+  section { padding: 48px 0; }
+}
+</style>
+</head>
+<body>
+  <header class="wrap entete">
+    <a class="marque" href="./"><svg viewBox="0 0 100 100" role="img" aria-label="Logo von Mein Wunschmuseum"><rect x="2" y="2" width="96" height="96" rx="22" fill="#F5F6F7" stroke="#DCDFE3" stroke-width="2"/><path transform="translate(20 20) scale(.6)" fill="#121418" fill-rule="evenodd" d="m94 2h-88c-2.2109 0-4 1.7891-4 4v88c0 2.2109 1.7891 4 4 4h88c2.2109 0 4-1.7891 4-4v-88c0-2.2109-1.7891-4-4-4zm-84 13.656 12 12v44.688l-12 12zm5.6562 74.344 12-12h44.688l12 12zm14.344-20v-40h40v40zm42.344-48h-44.688l-12-12h68.688z"/></svg><span>Mein Wunschmuseum</span></a>
+    <nav class="langues"><a class="langue" href="../" hreflang="fr" lang="fr">Français</a><a class="langue" href="../en/" hreflang="en" lang="en">English</a><a class="langue" href="../es/" hreflang="es" lang="es">Español</a><a class="langue" href="../it/" hreflang="it" lang="it">Italiano</a><a class="langue" href="../nl/" hreflang="nl" lang="nl">Nederlands</a></nav>
+  </header>
+
+  <main>
+    <div class="wrap accueil">
+      <div>
+        <h1>Mein Wunschmuseum</h1>
+        <p class="accroche">Halte die Werke fest, die dich berührt haben.</p>
+        <p class="intro">Ein Werk in einer Ausstellung hat dich berührt? Fotografiere es, notiere, was es in dir auslöst, und finde es jederzeit wieder. Mein Wunschmuseum ist dein persönliches Museumsnotizbuch: einfach und ohne Konto.</p>
+        <a class="bouton" aria-disabled="true">Bald bei Google Play</a>
+        <p class="note">Kostenlose Android-App · in sechs Sprachen</p>
+      </div>
+      <div class="telephone"><picture><source srcset="../assets/de-sombre-01-liste-expositions.jpg" media="(prefers-color-scheme: dark)"><img src="../assets/de-clair-01-liste-expositions.jpg" alt="Die Sammlung von Mein Wunschmuseum auf einem Handy" width="540" height="960" loading="eager" decoding="async"></picture></div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <h2>Alles, was du brauchst, nicht mehr</h2>
+      <div class="fonction">
+        <div class="texte"><h3>Ein Werk in Sekunden hinzufügen</h3><p>Fotografiere das Werk oder importiere es aus deiner Galerie. Scanne das Werkschild, vor Ort oder von einem Foto: Die App liest den Text und schlägt Künstler und Titel vor, direkt auf deinem Handy. Der Künstlername wird beim Tippen vorgeschlagen, Tippfehler werden erkannt; beim Titel seine berühmten Werke. Ein unbekanntes Werk? „Werk erkennen“ findet es mit Google Lens. Ausstellung, Ort, Datum und Begleitung werden von Werk zu Werk übernommen. Abends fügst du alle Fotos auf einmal hinzu: ein Werk pro Foto, datiert nach den Fotos.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-04-modifier-oeuvre.jpg" alt="Formular eines Werks mit Foto und Werkschild-Scan" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Deine Favoriten, mit einem Tippen</h3><p>Tippe auf das Herz eines Werks, in der Liste oder auf seiner Seite, und es gehört zu deinen Favoriten. Neben der Suche zeigt ein Filter nur sie, weiter nach Ausstellung, Datum, Ort oder Künstler sortiert. Dein Wunschmuseum auf einen Blick.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-01-liste-expositions.jpg" alt="Die Sammlung, mit einem Herz bei jedem Werk" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Behalte, was dir wichtig ist</h3><p>Deine Eindrücke, der Text des Werkschilds, deine eigenen Auswahlen wie „Wiedersehen“. Mehrere Fotos pro Werk, leicht zuzuschneiden oder zu drehen, und dein Lieblingsmuseum als Vorschlag. Ein Widget zeigt jeden Tag ein Werk deiner Sammlung auf dem Startbildschirm.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-02-fiche-oeuvre.jpg" alt="Die Seite eines Werks" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Museumsfotos, bearbeitet</h3><p>Im Museum aufgenommene Fotos sind oft schief oder schlecht beleuchtet. Schneide präzise mit der Lupe zu, richte die Perspektive gerade und lass die „Museum-Automatik“ das Licht der Säle korrigieren. Das alte Foto wird erst ersetzt, wenn du die Bearbeitung bestätigst.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-10-retouche-loupe.jpg" alt="Ein Foto bearbeiten, mit der Lupe an der Ecke des Rahmens" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Deine Galerie</h3><p>Alle deine Werke im Großformat, wie an den Wänden eines Museums: jeden Tag ein Werk des Tages, Erinnerungen, für dich zusammengestellt (deine Favoriten, dein Lieblingskünstler, deine Stilrichtungen, deine Besuche mit einem lieben Menschen…), deine eigenen Auswahlen per langem Druck und eine Diashow, um sie zu zeigen.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-03-galerie.jpg" alt="Die Galerie: Erinnerungen, Auswahlen und Mosaik" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Alles schnell wiederfinden</h3><p>Deine Sammlung nach Ausstellung, Datum, Ort oder Künstler sortiert, und eine Suche in all deinen Texten: Titel, Künstler, Ausstellung, Ort, Eindrücke, Werkschild. Einklappbare Abschnitte und ein langer Druck, um eine ganze Ausstellung oder mehrere Werke auf einmal zu bearbeiten.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-05-recherche.jpg" alt="Suche in der Sammlung" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Dein Kunstporträt</h3><p>Das Profil zeichnet dein Porträt, das mit deinen Besuchen wächst: dein Lieblingskünstler, dein Lieblingsmuseum, deine Museumsbegleitung, wie oft du ins Museum gehst im Vergleich zum Durchschnitt in Deutschland, und deine Werke nach Künstler, Stilrichtung, Epoche und Ort. Tippe auf eine Stilrichtung, um ihre Geschichte und deine Werke zu entdecken. Teile dein Porträt als Bild, ohne die Namen deiner Begleitung.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-06-ma-collection.jpg" alt="Das Profil: Porträt und Zahlen" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Schon gewusst?</h3><p>Über 900 geprüfte Anekdoten über Künstler und Museen: auf den Seiten deiner Werke, in deinem Porträt und jeden Tag oben in deiner Sammlung. Dazu über 240 Stilrichtungen, in wenigen Zeilen vorgestellt. Der Milchstrahl der „Milchmagd“, Picassos Tauben in Barcelona…</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-09-fiche-anecdote.jpg" alt="Die Seite eines Werks mit seiner Anekdote „Schon gewusst?“" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Abzeichen zum Sammeln</h3><p>Grand Tour, Vier Jahreszeiten, Lange Nacht der Museen, Alleskönnerin… 29 Abzeichen, die du beim Besuchen sammelst, als kleine Gemälde, deren Rahmen von Bronze bis Diamant immer prächtiger wird, jedes mit einer Anekdote aus der Kunstgeschichte. Alle sind vorab sichtbar, und deine nächsten Ziele zeigen, welche in Reichweite sind.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-07-mes-badges.jpg" alt="Meine Abzeichen und die nächsten Ziele" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Deine Daten gehören dir</h3><p>Alles bleibt auf deinem Handy. Kein Konto, keine Werbung. Wenn du willst, eine Sicherung in deinem eigenen Google Drive, mit Wiederherstellung auf einem neuen Handy; du kannst sie in der App löschen. Und deine ganze Sammlung lässt sich als Tabelle exportieren.</p></div>
+        <div class="telephone"><picture><img src="../assets/de-clair-08-reglages-sauvegarde.jpg" alt="Einstellungen der Google-Drive-Sicherung" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Auf einen Blick</h2>
+        <div class="galerie">
+        <figure><div class="telephone"><picture><img src="../assets/de-clair-01-liste-expositions.jpg" alt="Die Sammlung, nach Ausstellung" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Die Sammlung, nach Ausstellung</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/de-clair-03-galerie.jpg" alt="Die Galerie" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Die Galerie</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/de-clair-06-ma-collection.jpg" alt="Das Profil" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Das Profil</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/de-clair-02-fiche-oeuvre.jpg" alt="Die Seite eines Werks" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Die Seite eines Werks</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/de-clair-09-fiche-anecdote.jpg" alt="Schon gewusst?" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Schon gewusst?</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/de-clair-07-mes-badges.jpg" alt="Meine Abzeichen" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Meine Abzeichen</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="vie-privee">
+      <div class="wrap">
+        <h2>Deine Privatsphäre zuerst</h2>
+        <ul>
+        <li>Kein Konto: Wir wissen nicht, wer du bist.</li>
+        <li>Deine Fotos und Notizen bleiben auf deinem Handy, nie auf unseren Servern.</li>
+        <li>Keine Werbung, kein Datenverkauf.</li>
+        <li>Das Werkschild wird auf deinem Handy gelesen.</li>
+        </ul>
+        <p class="centre"><a href="https://artoryapp-afk.github.io/monmuseeideal/">Datenschutzerklärung lesen (auf Französisch)</a></p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="wrap centre">
+        <h2>Eine Frage, eine Idee?</h2>
+        <p>Schreib uns: <a href="mailto:artory.app@gmail.com">artory.app@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Artory · Mein Wunschmuseum</span>
+      <a href="https://artoryapp-afk.github.io/monmuseeideal/">Datenschutz und Nutzungsbedingungen (auf Französisch)</a>
+    </div>
+  </footer>
+</body>
+</html>

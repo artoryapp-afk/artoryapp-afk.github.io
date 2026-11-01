@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mijn Ideale Museum – Bewaar de kunstwerken die je raakten</title>
+<meta name="description" content="Gratis Android-app om de kunstwerken die je mooi vindt op tentoonstellingen te fotograferen, je indrukken te noteren en alles terug te vinden. Zonder account, zonder advertenties.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1F4D3F">
+<link rel="icon" href="../assets/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/icone-180.png">
+<link rel="alternate" hreflang="fr" href="https://artoryapp-afk.github.io/">
+<link rel="alternate" hreflang="en" href="https://artoryapp-afk.github.io/en/">
+<link rel="alternate" hreflang="de" href="https://artoryapp-afk.github.io/de/">
+<link rel="alternate" hreflang="es" href="https://artoryapp-afk.github.io/es/">
+<link rel="alternate" hreflang="it" href="https://artoryapp-afk.github.io/it/">
+<link rel="alternate" hreflang="nl" href="https://artoryapp-afk.github.io/nl/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mijn Ideale Museum">
+<meta property="og:description" content="Bewaar de kunstwerken die je raakten.">
+<meta property="og:url" content="https://artoryapp-afk.github.io/nl/">
+<meta property="og:image" content="https://artoryapp-afk.github.io/assets/partage-nl.png">
+<style>
+/* Instrument Sans (SIL Open Font License 1.1, voir assets/OFL.txt), fichiers web officiels. */
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Instrument Sans'; src: url('../assets/InstrumentSans-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+:root {
+  --mmi-paper: #F5F6F7; --mmi-card: #E7E9EC; --mmi-ink: #121418; --mmi-muted: #6A6F78;
+  --mmi-accent: #1F4D3F; --mmi-on-accent: #F5F6F7; --mmi-line: #DCDFE3; --mmi-frame: #121418;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mmi-paper: #1E2823; --mmi-card: #26322C; --mmi-ink: #E7EDE4; --mmi-muted: #9FB0A4;
+    --mmi-accent: #EDE7B9; --mmi-on-accent: #1E2823; --mmi-line: #3A4A42; --mmi-frame: #0B0F0D;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--mmi-paper); color: var(--mmi-ink); font: 17px/1.6 'Instrument Sans', system-ui, sans-serif; }
+img { max-width: 100%; display: block; }
+a { color: var(--mmi-accent); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: 'Instrument Sans', system-ui, sans-serif; font-weight: 500; line-height: 1.2; margin: 0; }
+
+/* En-tête */
+.entete { display: flex; align-items: center; justify-content: space-between; padding-block: 22px; }
+.marque { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--mmi-ink);
+  font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 1.25rem; font-weight: 500; }
+.marque svg { width: 40px; height: 40px; flex-shrink: 0; }
+.langues { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.langue { font-size: .85rem; text-decoration: none; border: 1px solid var(--mmi-line); border-radius: 999px; padding: 4px 10px; }
+
+/* Accueil */
+.accueil { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-block: 40px 72px; }
+.accueil h1 { font-size: clamp(2.4rem, 5.5vw, 3.6rem); }
+.accroche { font-family: 'Instrument Sans', system-ui, sans-serif; color: var(--mmi-accent); font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin: 14px 0 22px; line-height: 1.3; }
+.intro { color: var(--mmi-muted); max-width: 34em; margin: 0 0 30px; }
+.bouton { display: inline-block; background: var(--mmi-accent); color: var(--mmi-on-accent); border-radius: 999px;
+  padding: 14px 28px; font-weight: 600; text-decoration: none; }
+.bouton[aria-disabled="true"] { cursor: default; }
+.note { color: var(--mmi-muted); font-size: .9rem; margin-top: 12px; }
+
+/* Téléphone */
+.telephone { background: var(--mmi-frame); border-radius: 36px; padding: 10px; max-width: 300px; margin: 0 auto;
+  box-shadow: 0 24px 48px rgba(18, 20, 24, .22); }
+.telephone img { border-radius: 27px; width: 100%; height: auto; }
+
+/* Fonctions */
+section { padding: 64px 0; border-top: 1px solid var(--mmi-line); }
+section > .wrap > h2 { font-size: clamp(1.8rem, 3.6vw, 2.4rem); margin-bottom: 40px; text-align: center; }
+.fonction { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; margin: 0 0 72px; }
+.fonction:last-child { margin-bottom: 0; }
+.fonction:nth-child(even) .texte { order: 2; }
+.fonction h3 { font-size: 1.6rem; margin-bottom: 14px; }
+.fonction p { color: var(--mmi-muted); margin: 0; }
+.fonction .telephone { max-width: 260px; }
+
+/* Galerie */
+.galerie { display: flex; gap: 22px; overflow-x: auto; padding: 8px 4px 24px; scroll-snap-type: x mandatory; }
+.galerie figure { margin: 0; flex: 0 0 220px; scroll-snap-align: center; }
+.galerie .telephone { max-width: none; border-radius: 28px; padding: 8px; box-shadow: 0 12px 28px rgba(18, 20, 24, .18); }
+.galerie .telephone img { border-radius: 21px; }
+.galerie figcaption { text-align: center; color: var(--mmi-muted); font-size: .9rem; margin-top: 12px; }
+
+/* Vie privée */
+.vie-privee ul { list-style: none; padding: 0; margin: 0 auto 28px; max-width: 640px; display: grid; gap: 14px; }
+.vie-privee li { background: var(--mmi-card); border: 1px solid var(--mmi-line); border-radius: 14px; padding: 16px 20px 16px 52px; position: relative; }
+.vie-privee li::before { content: ""; position: absolute; left: 20px; top: 22px; width: 14px; height: 8px;
+  border-left: 2.5px solid var(--mmi-accent); border-bottom: 2.5px solid var(--mmi-accent); transform: rotate(-45deg); }
+.centre { text-align: center; }
+
+/* Pied */
+.contact p { margin: 0; }
+footer { border-top: 1px solid var(--mmi-line); padding: 28px 0 40px; color: var(--mmi-muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+/* Téléphones */
+@media (max-width: 760px) {
+  .accueil, .fonction { grid-template-columns: 1fr; gap: 32px; }
+  .accueil { padding-block: 16px 56px; text-align: center; }
+  .intro { margin-left: auto; margin-right: auto; }
+  .fonction { margin-bottom: 56px; }
+  .fonction:nth-child(even) .texte { order: 0; }
+  .fonction .telephone, .accueil .telephone { max-width: 240px; }
+  section { padding: 48px 0; }
+}
+</style>
+</head>
+<body>
+  <header class="wrap entete">
+    <a class="marque" href="./"><svg viewBox="0 0 100 100" role="img" aria-label="Logo van Mijn Ideale Museum"><rect x="2" y="2" width="96" height="96" rx="22" fill="#F5F6F7" stroke="#DCDFE3" stroke-width="2"/><path transform="translate(20 20) scale(.6)" fill="#121418" fill-rule="evenodd" d="m94 2h-88c-2.2109 0-4 1.7891-4 4v88c0 2.2109 1.7891 4 4 4h88c2.2109 0 4-1.7891 4-4v-88c0-2.2109-1.7891-4-4-4zm-84 13.656 12 12v44.688l-12 12zm5.6562 74.344 12-12h44.688l12 12zm14.344-20v-40h40v40zm42.344-48h-44.688l-12-12h68.688z"/></svg><span>Mijn Ideale Museum</span></a>
+    <nav class="langues"><a class="langue" href="../" hreflang="fr" lang="fr">Français</a><a class="langue" href="../en/" hreflang="en" lang="en">English</a><a class="langue" href="../de/" hreflang="de" lang="de">Deutsch</a><a class="langue" href="../es/" hreflang="es" lang="es">Español</a><a class="langue" href="../it/" hreflang="it" lang="it">Italiano</a></nav>
+  </header>
+
+  <main>
+    <div class="wrap accueil">
+      <div>
+        <h1>Mijn Ideale Museum</h1>
+        <p class="accroche">Bewaar de kunstwerken die je raakten.</p>
+        <p class="intro">Raakte een kunstwerk je op een tentoonstelling? Maak een foto, noteer wat het bij je oproept en vind het terug wanneer je wilt. Mijn Ideale Museum is je persoonlijke museumschrift: eenvoudig en zonder account.</p>
+        <a class="bouton" aria-disabled="true">Binnenkort op Google Play</a>
+        <p class="note">Gratis Android-app · in zes talen</p>
+      </div>
+      <div class="telephone"><picture><source srcset="../assets/nl-sombre-01-liste-expositions.jpg" media="(prefers-color-scheme: dark)"><img src="../assets/nl-clair-01-liste-expositions.jpg" alt="De collectie van Mijn Ideale Museum op een telefoon" width="540" height="960" loading="eager" decoding="async"></picture></div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <h2>Alles wat je nodig hebt, niets meer</h2>
+      <div class="fonction">
+        <div class="texte"><h3>Een kunstwerk toevoegen in een paar seconden</h3><p>Fotografeer het kunstwerk of importeer het uit je galerij. Scan het bordje, ter plekke of vanaf een foto: de app leest de tekst en stelt de kunstenaar en de titel voor, gewoon op je telefoon. De naam van de kunstenaar wordt voorgesteld terwijl je typt en typfouten worden herkend; voor de titel, zijn beroemde werken. Een onbekend kunstwerk? “Kunstwerk herkennen” vindt het met Google Lens. Tentoonstelling, plaats, datum en gezelschap gaan mee van kunstwerk naar kunstwerk. 's Avonds voeg je al je foto's tegelijk toe: één kunstwerk per foto, met de datum van de foto's.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-04-modifier-oeuvre.jpg" alt="Formulier van een kunstwerk, met foto en scan van het bordje" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Je favorieten, met één tik</h3><p>Tik op het hartje van een kunstwerk, in de lijst of op de pagina, en het hoort bij je favorieten. Naast de zoekknop toont een filter alleen hen, nog steeds op tentoonstelling, datum, plaats of kunstenaar. Je ideale museum in één oogopslag.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-01-liste-expositions.jpg" alt="De collectie, met een hartje bij elk kunstwerk" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Bewaar wat voor jou telt</h3><p>Je indrukken, de tekst van het bordje, je eigen selecties zoals “Nog eens zien”. Meerdere foto's per kunstwerk, makkelijk bij te snijden of te draaien, en je favoriete museum als voorstel. Een widget toont elke dag een kunstwerk uit je collectie op je beginscherm.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-02-fiche-oeuvre.jpg" alt="De pagina van een kunstwerk" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Museumfoto's, bewerkt</h3><p>Foto's in het museum zijn vaak scheef of slecht belicht. Snijd nauwkeurig bij met het vergrootglas, zet het perspectief recht en laat “Museum-auto” het licht van de zalen corrigeren. De oude foto wordt pas vervangen als je de bewerking bevestigt.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-10-retouche-loupe.jpg" alt="Een foto bewerken, met het vergrootglas op de hoek van de lijst" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Je galerij</h3><p>Al je kunstwerken groot, zoals aan de muren van een museum: elke dag een werk van de dag, herinneringen die voor je zijn samengesteld (je favorieten, je favoriete kunstenaar, je stromingen, je bezoeken met een dierbare…), je eigen selecties, gemaakt met lang indrukken, en een diavoorstelling om ze te laten zien.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-03-galerie.jpg" alt="De Galerij: herinneringen, selecties en mozaïek" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Alles snel terugvinden</h3><p>Je collectie gesorteerd op tentoonstelling, datum, plaats of kunstenaar, en zoeken in al je teksten: titel, kunstenaar, tentoonstelling, plaats, indrukken, bordje. Inklapbare secties en lang indrukken om een hele tentoonstelling of meerdere kunstwerken tegelijk te bewerken.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-05-recherche.jpg" alt="Zoeken in de collectie" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Je kunstportret</h3><p>Het Profiel tekent je portret, dat meegroeit met je bezoeken: je favoriete kunstenaar, je favoriete museum, je museummaatje, hoe vaak je naar het museum gaat vergeleken met het Nederlandse gemiddelde, en je kunstwerken per kunstenaar, stroming, tijdperk en plaats. Tik op een stroming om de geschiedenis ervan en je kunstwerken te ontdekken. Deel je portret als afbeelding, zonder de namen van je gezelschap.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-06-ma-collection.jpg" alt="Het Profiel: portret en cijfers" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Wist je dat?</h3><p>Meer dan 900 gecontroleerde anekdotes over kunstenaars en musea: op de pagina's van je kunstwerken, in je portret en elke dag bovenaan je collectie. Plus meer dan 240 stromingen, in een paar regels voorgesteld. Het straaltje melk van “Het melkmeisje”, de duiven van Picasso in Barcelona…</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-09-fiche-anecdote.jpg" alt="De pagina van een kunstwerk met de anekdote “Wist je dat?”" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Badges om te verzamelen</h3><p>Grand Tour, Vier seizoenen, Museumnacht, Alleskunner… 29 badges om te verdienen tijdens je bezoeken, als kleine schilderijen waarvan de lijst rijker wordt van brons tot diamant, elk met een anekdote uit de kunstgeschiedenis. Ze zijn allemaal vooraf te zien, en je volgende doelen tonen welke binnen bereik zijn.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-07-mes-badges.jpg" alt="Mijn badges en de volgende doelen" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      <div class="fonction">
+        <div class="texte"><h3>Je gegevens blijven van jou</h3><p>Alles blijft op je telefoon. Geen account, geen advertenties. Als je wilt, een back-up in je eigen Google Drive, met herstel op een nieuwe telefoon; je kunt hem in de app verwijderen. En je hele collectie kun je exporteren naar een spreadsheet.</p></div>
+        <div class="telephone"><picture><img src="../assets/nl-clair-08-reglages-sauvegarde.jpg" alt="Instellingen van de back-up in Google Drive" width="540" height="960" loading="lazy" decoding="async"></picture></div>
+      </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>In één oogopslag</h2>
+        <div class="galerie">
+        <figure><div class="telephone"><picture><img src="../assets/nl-clair-01-liste-expositions.jpg" alt="De collectie, per tentoonstelling" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>De collectie, per tentoonstelling</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/nl-clair-03-galerie.jpg" alt="De Galerij" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>De Galerij</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/nl-clair-06-ma-collection.jpg" alt="Het Profiel" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Het Profiel</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/nl-clair-02-fiche-oeuvre.jpg" alt="De pagina van een kunstwerk" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>De pagina van een kunstwerk</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/nl-clair-09-fiche-anecdote.jpg" alt="Wist je dat?" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Wist je dat?</figcaption></figure>
+        <figure><div class="telephone"><picture><img src="../assets/nl-clair-07-mes-badges.jpg" alt="Mijn badges" width="540" height="960" loading="lazy" decoding="async"></picture></div><figcaption>Mijn badges</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="vie-privee">
+      <div class="wrap">
+        <h2>Je privacy eerst</h2>
+        <ul>
+        <li>Geen account nodig: we weten niet wie je bent.</li>
+        <li>Je foto's en notities blijven op je telefoon, nooit op onze servers.</li>
+        <li>Geen advertenties, geen verkoop van gegevens.</li>
+        <li>Het bordje wordt op je telefoon gelezen.</li>
+        </ul>
+        <p class="centre"><a href="https://artoryapp-afk.github.io/monmuseeideal/">Lees het privacybeleid (in het Frans)</a></p>
+      </div>
+    </section>
+
+    <section class="contact">
+      <div class="wrap centre">
+        <h2>Een vraag, een idee?</h2>
+        <p>Schrijf ons: <a href="mailto:artory.app@gmail.com">artory.app@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Artory · Mijn Ideale Museum</span>
+      <a href="https://artoryapp-afk.github.io/monmuseeideal/">Privacy en voorwaarden (in het Frans)</a>
+    </div>
+  </footer>
+</body>
+</html>
